@@ -14,14 +14,21 @@ import java.util.List;
 
 public interface BankAccountService {
 
-    Customer saveCustomer(Customer customer);
+    CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CurrentAccount saveCurrentAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingAccount saveSavingAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
+
+    CustomerDTO getCustomer(Long id) throws CustomerNotFoundException;
+
     BankAccount getBankAccount(String accountId) throws BankAccountNotFindException;
     void debit(String accountId, double amount, String description) throws BankAccountNotFindException, BalanceNotSufficientException;
     void credit(String accountId, double amount, String description) throws BankAccountNotFindException;
     void transfer(String accountIdSource, String accountIdDestination, double amount) throws BalanceNotSufficientException, BankAccountNotFindException;
 
     List<BankAccount> bankAccountList();
+
+    CustomerDTO updateCustomer(CustomerDTO customerDTO);
+
+    void deleteCustomer(Long custumerId);
 }

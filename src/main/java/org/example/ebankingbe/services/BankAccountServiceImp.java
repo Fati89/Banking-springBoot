@@ -15,7 +15,6 @@ import org.example.ebankingbe.repositories.BankAccountRepository;
 import org.example.ebankingbe.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -36,10 +35,11 @@ public class BankAccountServiceImp implements BankAccountService{
 
 
     @Override
-    public Customer saveCustomer(Customer customer) {
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
         log.info("saving new customer");
+        Customer customer = dtoMapper.fromCustomerDTO(customerDTO);
         Customer savedCustomer = customerRepository.save(customer);
-        return savedCustomer;
+        return dtoMapper.fromCustomer(savedCustomer);
     }
 
     @Override
@@ -87,6 +87,12 @@ public class BankAccountServiceImp implements BankAccountService{
         }
         */
         return customerDTOS;
+    }
+
+    @Override
+    public CustomerDTO getCustomer(Long id) throws CustomerNotFoundException {
+        return dtoMapper.fromCustomer(customerRepository.findById(id).
+                orElseThrow(()->new CustomerNotFoundException("No customer has this id: "+id)));
     }
 
     @Override
@@ -139,5 +145,19 @@ public class BankAccountServiceImp implements BankAccountService{
     @Override
     public List<BankAccount> bankAccountList(){
         return bankAccountRepository.findAll();
+    }
+
+    @Override
+    public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
+        log.info("updating customer");
+        Customer customer = dtoMapper.fromCustomerDTO(customerDTO);
+        Customer savedCustomer = customerRepository.save(customer);
+        return dtoMapper.fromCustomer(savedCustomer);
+    }
+
+    @Override
+    public void deleteCustomer(Long custumerId){
+        log.info("deleting customer");
+        customerRepository.deleteById(custumerId);
     }
 }
