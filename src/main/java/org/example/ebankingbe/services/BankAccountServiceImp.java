@@ -3,18 +3,23 @@ package org.example.ebankingbe.services;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.ebankingbe.dtos.CustomerDTO;
 import org.example.ebankingbe.entities.*;
 import org.example.ebankingbe.enums.OperationType;
 import org.example.ebankingbe.exceptions.BalanceNotSufficientException;
 import org.example.ebankingbe.exceptions.BankAccountNotFindException;
 import org.example.ebankingbe.exceptions.CustomerNotFoundException;
+import org.example.ebankingbe.mappers.BankAccountMapperImp;
 import org.example.ebankingbe.repositories.AccountOperationRepository;
 import org.example.ebankingbe.repositories.BankAccountRepository;
 import org.example.ebankingbe.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,6 +32,7 @@ public class BankAccountServiceImp implements BankAccountService{
     private CustomerRepository customerRepository;
     private BankAccountRepository bankAccountRepository;
     private AccountOperationRepository accountOperationRepository;
+    private BankAccountMapperImp dtoMapper;
 
 
     @Override
@@ -67,9 +73,20 @@ public class BankAccountServiceImp implements BankAccountService{
     }
 
     @Override
-    public List<Customer> listCustomers() {
+    public List<CustomerDTO> listCustomers() {
         log.info("Checking customers list");
-        return customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
+        List<CustomerDTO> customerDTOS = customers.stream()
+                .map(cust->dtoMapper.fromCustomer(cust))
+                .collect(Collectors.toList());
+        /*
+        List<CustomerDTO> customerDTOS=new ArrayList<>();
+        for (Customer customer: customers) {
+            CustomerDTO customerDTO=dtoMapper.fromCustomer (customer);
+            customerDTOS.add(customerDTO);
+        }
+        */
+        return customerDTOS;
     }
 
     @Override
