@@ -1,13 +1,9 @@
 package org.example.ebankingbe.services;
 
 
-import org.example.ebankingbe.dtos.CustomerDTO;
-import org.example.ebankingbe.entities.BankAccount;
-import org.example.ebankingbe.entities.CurrentAccount;
-import org.example.ebankingbe.entities.Customer;
-import org.example.ebankingbe.entities.SavingAccount;
+import org.example.ebankingbe.dtos.*;
 import org.example.ebankingbe.exceptions.BalanceNotSufficientException;
-import org.example.ebankingbe.exceptions.BankAccountNotFindException;
+import org.example.ebankingbe.exceptions.BankAccountNotFoundException;
 import org.example.ebankingbe.exceptions.CustomerNotFoundException;
 
 import java.util.List;
@@ -15,20 +11,26 @@ import java.util.List;
 public interface BankAccountService {
 
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
-    CurrentAccount saveCurrentAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
-    SavingAccount saveSavingAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
+    CurrentAccountDTO saveCurrentAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
+    SavingAccountDTO saveSavingAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
 
     CustomerDTO getCustomer(Long id) throws CustomerNotFoundException;
 
-    BankAccount getBankAccount(String accountId) throws BankAccountNotFindException;
-    void debit(String accountId, double amount, String description) throws BankAccountNotFindException, BalanceNotSufficientException;
-    void credit(String accountId, double amount, String description) throws BankAccountNotFindException;
-    void transfer(String accountIdSource, String accountIdDestination, double amount) throws BalanceNotSufficientException, BankAccountNotFindException;
+    BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
+    void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException;
+    void credit(String accountId, double amount, String description) throws BankAccountNotFoundException;
+    void transfer(String accountIdSource, String accountIdDestination, double amount) throws BalanceNotSufficientException, BankAccountNotFoundException;
 
-    List<BankAccount> bankAccountList();
+    List<BankAccountDTO> bankAccountList();
 
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
     void deleteCustomer(Long custumerId);
+
+    List<AccountOperationDTO> accountHistory(String accountId);
+
+    AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
+
+    List<BankAccountDTO> getCustomerAccounts(long id);
 }

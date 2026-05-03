@@ -2,8 +2,9 @@ package org.example.ebankingbe.web;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.ebankingbe.dtos.BankAccountDTO;
 import org.example.ebankingbe.dtos.CustomerDTO;
-import org.example.ebankingbe.entities.Customer;
+import org.example.ebankingbe.exceptions.BankAccountNotFoundException;
 import org.example.ebankingbe.exceptions.CustomerNotFoundException;
 import org.example.ebankingbe.services.BankAccountService;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class CustomerRestController {
     @PutMapping("/customers/{idCustomer}")
     public CustomerDTO updateCustomer(@PathVariable Long idCustomer, @RequestBody CustomerDTO customerDTO){
         customerDTO.setId(idCustomer);
-        return bankAccountService.saveCustomer(customerDTO);
+        return bankAccountService.updateCustomer(customerDTO);
     }
 
     @DeleteMapping("/customers/{idCustomer}")

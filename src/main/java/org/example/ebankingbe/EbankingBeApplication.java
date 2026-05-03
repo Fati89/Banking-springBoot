@@ -1,11 +1,12 @@
 package org.example.ebankingbe;
 
+import org.example.ebankingbe.dtos.BankAccountDTO;
 import org.example.ebankingbe.dtos.CustomerDTO;
 import org.example.ebankingbe.entities.*;
 import org.example.ebankingbe.enums.AccountStatus;
 import org.example.ebankingbe.enums.OperationType;
 import org.example.ebankingbe.exceptions.BalanceNotSufficientException;
-import org.example.ebankingbe.exceptions.BankAccountNotFindException;
+import org.example.ebankingbe.exceptions.BankAccountNotFoundException;
 import org.example.ebankingbe.exceptions.CustomerNotFoundException;
 import org.example.ebankingbe.repositories.AccountOperationRepository;
 import org.example.ebankingbe.repositories.BankAccountRepository;
@@ -42,30 +43,30 @@ public class EbankingBeApplication {
                 try {
                     bankAccountService.saveCurrentAccount(Math.random()*90000, 9000, cust.getId());
                     bankAccountService.saveSavingAccount(Math.random()*120000, 5.5, cust.getId());
-                    List<BankAccount> bankAccounts = bankAccountService.bankAccountList();
-                    for(BankAccount acc:bankAccounts){
-                        for(int i=0; i<1; i++){
-                            bankAccountService.credit(acc.getId(), 10000+Math.random()*120000, "credit");
-                            bankAccountService.debit(acc.getId(), 1000+Math.random()*9000, "debit");
+                    List<BankAccountDTO> bankAccounts = bankAccountService.getCustomerAccounts(cust.getId());
+                    for(BankAccountDTO acc:bankAccounts){
+                        for(int i=0; i<5; i++){
+                            bankAccountService.credit(acc.getId(), 10000+Math.random()*120000, "credit"+i);
+                            bankAccountService.debit(acc.getId(), 1000+Math.random()*9000, "debit"+i);
                         }
                     }
                 } catch (CustomerNotFoundException e) {
                     e.printStackTrace();
-                }catch (BankAccountNotFindException e) {
+                }catch (BankAccountNotFoundException e) {
                     throw new RuntimeException(e);
                 } catch (BalanceNotSufficientException e) {
                     throw new RuntimeException(e);
                 }
             });
 
-            bankAccountService.transfer(bankAccountService.bankAccountList().get(0).getId(),bankAccountService.bankAccountList().get(2).getId(), 100);
+            //bankAccountService.transfer(bankAccountService.bankAccountList().get(0).getId(),bankAccountService.bankAccountList().get(2).getId(), 100);
         };
     }
 
     // ------------------------------------------------------------------------------------
 
     // @Bean
-    CommandLineRunner start (CustomerRepository customerRepository, // C’est un outil Spring Boot qui s’exécute automatiquement au démarrage de l’application️ ---> donc ce code tourne une seule fois au lancement
+    /*CommandLineRunner start (CustomerRepository customerRepository, // C’est un outil Spring Boot qui s’exécute automatiquement au démarrage de l’application️ ---> donc ce code tourne une seule fois au lancement
                              BankAccountRepository bankAccountRepository, // Les paramètres (Injection automatique)
                              AccountOperationRepository accountOperationRepository) {
         return args -> {
@@ -109,5 +110,5 @@ public class EbankingBeApplication {
             });
 
         };
-    }
+    }*/
 }
