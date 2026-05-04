@@ -157,3 +157,103 @@ L'exposition des fonctionnalités se fait via deux contrôleurs RESTful, suivant
 
 ---
 
+---
+
+## 2. Développement Frontend
+
+### 2.1. Introduction
+Cette section présente le développement de l'interface utilisateur du projet **Digital Banking**. Le frontend a été réalisé avec Angular, permettant une interaction dynamique avec l'API REST développée en backend. Cette partie couvre l'architecture, les composants, les services et les fonctionnalités implémentées.
+
+### 2.2. Technologies
+Le frontend utilise une architecture moderne basée sur les composants et le pattern MVC.
+
+- **Framework** : Angular
+- **Langage** : TypeScript
+- **Styles** : CSS, BootStarp
+- **Communication HTTP** : HttpClient
+- **Routing** : Angular Router
+- **Patterns** : Components, Services, Models, Dependency Injection
+
+### 2.3. Architecture Générale
+L'application frontend suit une architecture modulaire organisée en dossiers fonctionnels.
+
+<img width="307" height="331" alt="1-architecture" src="https://github.com/user-attachments/assets/e9b183f5-22b6-4fc8-bdeb-47e8ddc86f8b" />
+
+Structure du projet :
+- **app/customers** : Composant de gestion des clients
+- **app/new-customer** : Composant d'ajout de nouveau client
+- **app/models** : Modèles de données TypeScript
+- **app/services** : Services de communication avec l'API
+- **app/navbar** : Composant de navigation
+
+### 2.4. Modèles de Données (TypeScript)
+Les interfaces TypeScript ont été créées pour typer les données échangées avec le backend.
+
+#### 2.4.1. Customer Model
+Définition de l'interface Customer correspondant au DTO du backend.
+
+<img width="273" height="126" alt="image" src="https://github.com/user-attachments/assets/c929230b-bb6b-454f-b92c-d0fdd023d868" />
+
+
+### 2.5. Services Angular
+La couche service permet la communication avec l'API REST backend via HttpClient.
+
+#### 2.5.1. CustomerService
+Service dédié aux opérations CRUD sur les clients.
+
+**Méthodes implémentées :**
+- `getCustomers()` : Récupération de la liste des clients
+- `searchCustomers(keyword)` : Recherche de clients par nom
+- `addCustomer(customer)` : Ajout d'un nouveau client
+- `deleteCustomer(id)` : Suppression d'un client
+  <img width="766" height="420" alt="image" src="https://github.com/user-attachments/assets/4e8d94b4-4c92-492c-94d1-3dfe20e62d2f" />
+
+
+### 2.6. Composants
+
+#### 2.6.1. CustomerComponent
+Composant principal de gestion des clients affichant la liste et permettant les opérations de recherche et suppression.
+
+**Fonctionnalités :**
+- Affichage de la liste des clients dans un tableau
+- Barre de recherche pour filtrer les clients
+- Bouton de suppression pour chaque client
+- Navigation vers le formulaire d'ajout
+
+#### 2.6.2. NewCustomerComponent
+Composant de formulaire pour l'ajout d'un nouveau client.
+
+**Fonctionnalités :**
+- Formulaire de saisie des informations client
+- Validation des champs
+- Soumission vers le backend
+- Redirection vers la liste après ajout
+
+<img width="1366" height="387" alt="7" src="https://github.com/user-attachments/assets/6bfd0c24-8b14-49dc-863a-95783c8da909" />
+
+
+#### 2.6.3. NavbarComponent
+Composant de navigation permettant d'accéder aux différentes sections de l'application.
+
+<img width="584" height="310" alt="image" src="https://github.com/user-attachments/assets/cc3705a9-5274-43e7-a151-2caa156abde4" />
+
+
+### 2.7. Routage
+Configuration des routes pour la navigation entre les composants.
+
+**Routes définies :**
+- `/` : Redirection vers liste des clients
+- `/customers` : Liste des clients
+- `/new-customer` : Formulaire d'ajout
+- `/accounts` : Gestion des comptes (à implémenter)
+
+  <img width="515" height="302" alt="image" src="https://github.com/user-attachments/assets/7510c1b9-5e37-4078-96b0-def08da7a34f" />
+
+
+### 2.8. Fonctionnalités Implémentées
+- `consulter clients` 
+- `ajouter client` 
+- `chercher cients` 
+- `supprimer client` 
+
+<img width="1133" height="252" alt="8" src="https://github.com/user-attachments/assets/750e64e2-ae27-4773-b119-25b5c9317b38" />
