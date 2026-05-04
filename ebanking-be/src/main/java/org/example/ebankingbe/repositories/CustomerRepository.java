@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    // List<Customer> getCustomersByNameContains(String keyword);
+    // List<CustomerService> getCustomersByNameContains(String keyword);
     @Query("select c from Customer c where c.name like :kw")
     List<Customer> searchCustomer(@Param("kw") String keyword);
 }

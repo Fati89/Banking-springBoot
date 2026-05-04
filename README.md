@@ -25,7 +25,7 @@ Le backend repose sur une architecture modulaire en couches, favorisant la maint
 ## 1.3. Modèle de Données (Entités JPA)
 Le domaine métier a été modélisé à travers les entités suivantes, avec gestion des relations et de l'héritage stratégique pour les types de comptes.
 
-- `Customer` : Informations du client
+- `CustomerService` : Informations du client
   <img width="531" height="254" alt="image" src="https://github.com/user-attachments/assets/a1a15bf7-54bb-467a-bc09-a15e0b26c81f" />
 
 - `BankAccount` : Entité parente commune aux comptes

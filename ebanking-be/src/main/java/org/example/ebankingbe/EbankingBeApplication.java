@@ -72,7 +72,7 @@ public class EbankingBeApplication {
         return args -> {
 
             Stream.of("Hassan", "Yassine", "Aicha").forEach(name->{ // créer une liste des noms
-                Customer customer=new Customer();
+                CustomerService customer=new CustomerService();
                 customer.setName(name);
                 customer.setEmail(name+"@gmail.com");
                 customerRepository.save(customer);
