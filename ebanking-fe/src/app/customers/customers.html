@@ -1,6 +1,5 @@
 <div class="container mt-2">
   <ng-container *ngIf="customers | async as listCustomers; else failureOrLoading">
-    <div class="card-header">Customers</div>
     <div class="card-body">
       <div *ngIf="searchFormGroup">
         <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
