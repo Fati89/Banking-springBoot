@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import {CustomerService } from '../services/customerService';
 import {CustomerModel } from '../models/customerModel';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, map, Observable, throwError} from 'rxjs';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class Customers {
   customers! : Observable<Array<CustomerModel>>;
   errorMessage!: string;
   searchFormGroup : FormGroup | undefined;
-  constructor(private customerService : CustomerService, private fb : FormBuilder) { }
+  constructor(private customerService : CustomerService, private fb : FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
     this.searchFormGroup=this.fb.group({
@@ -33,5 +34,26 @@ export class Customers {
       })
     );
   }
+
+  handleDeleteCustomer(c: CustomerModel) {
+    let conf = confirm("Are you sure?");
+    if(!conf) return;
+    this.customerService.deleteCustomer(c.id).subscribe({
+      next : (resp) => {
+        this.customers=this.customers.pipe(
+          map(data=>{
+            let index=data.indexOf(c);
+            data.slice(index,1)
+            return data;
+          })
+        );
+      },
+      error : err => {
+        console.log(err);
+      }
+    })
+  }
+
+
 
 }
