@@ -5,14 +5,12 @@ import org.example.ebankingbe.dtos.AccountOperationDTO;
 import org.example.ebankingbe.dtos.BankAccountDTO;
 import org.example.ebankingbe.exceptions.BankAccountNotFoundException;
 import org.example.ebankingbe.services.BankAccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin("*") // “J’autorise toutes les origines (tous les sites) à accéder à cette API”
 public class BankAccountRestAPI {
 
     private BankAccountService bankAccountService;

@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { Auth as Authentification } from './services/auth';
 import { Navbar } from './navbar/navbar';
 
 @Component({
@@ -8,6 +9,11 @@ import { Navbar } from './navbar/navbar';
   standalone: false,
   styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('ebanking-fe');
+export class App implements OnInit {
+  protected readonly title = signal('Banking');
+
+  constructor(private authserviec: Authentification) {}
+  ngOnInit() {
+    this.authserviec.loadJWTokenFromlocalStorage()
+  }
 }
